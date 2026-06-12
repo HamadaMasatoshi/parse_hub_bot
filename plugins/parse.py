@@ -133,7 +133,11 @@ async def jx(cli: Client, msg: Message) -> None:
         text = msg.text or msg.caption or ""
 
     tokens = text.strip().split()
-    urls = list({i for i in tokens if ParseService().parser.get_platform(i)})[:10]
+    # ── 【修改：提取 URL 时只认推特】 ──
+    urls = list({
+        i for i in tokens 
+        if ParseService().parser.get_platform(i) and ("x.com" in i.lower() or "twitter.com" in i.lower())
+    })[:10]
 
     if not urls:
         await msg.reply_text("**▎不支持的平台**")
