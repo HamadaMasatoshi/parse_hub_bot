@@ -1,0 +1,10 @@
+services:
+  parse_hub_bot:
+    build: .
+    container_name: parse_hub_bot
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./sessions:/app/sessions     # 挂载 session，避免容器重启后 Bot 掉线
+      - ./downloads:/app/downloads   # 挂载下载目录，方便清理或查看残留
